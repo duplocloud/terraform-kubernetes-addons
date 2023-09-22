@@ -1,3 +1,3 @@
-# Duplocloud Terraform Modules  
+# Duplocloud Kubernetes Addons  
 
-A collection of common cloud patterns built on top of the official Duplocloud Terraform provider.  
+A collection of common kubernetes addons.  
