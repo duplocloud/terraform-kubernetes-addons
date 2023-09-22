@@ -105,6 +105,7 @@ resource "kubernetes_deployment_v1" "bitbucket_runner" {
             name = "tmp"
             mount_path = "/tmp"
           }
+        }
       }
     }
   }
