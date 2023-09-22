@@ -25,5 +25,3 @@ variable "runner_token" {
   description = "The Gitlab Runner registration token"
   type = string
 }
-  
-}
