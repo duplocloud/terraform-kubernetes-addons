@@ -1,0 +1,53 @@
+nodeSelector:
+  tenantname: ${namespace}
+gitlabUrl: https://gitlab.com/
+rbac:
+  create: true
+  clusterWideAccess: true
+  rules:
+  - resources: ["configmaps", "pods", "pods/attach", "secrets", "services"]
+    verbs: ["get", "list", "watch", "create", "patch", "update", "delete"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["serviceAccounts"]
+    verbs: ["get"]
+resources: 
+  limits:
+    memory: 256Mi
+    cpu: 1
+  requests:
+    memory: 128Mi
+    cpu: 100m
+
+runners:
+  # name: noetica-runner
+  # executor: kubernetes
+  secret: ${release_name}
+  # tags: eks,custom
+  # maximumTimeout: 86400
+  # cache:
+  #   secretName: gitlab-runner-aws
+  config: |
+
+    [[runners]]
+      [runners.kubernetes]
+        namespace = "{{.Release.Namespace}}"
+        image = "python:latest"
+        cpu_limit = "1"
+        memory_limit = "4Gi"
+        helper_cpu_limit = "500m"
+        helper_memory_limit = "500Mi"
+        [runners.kubernetes.node_selector]
+          tenantname = "${namespace}"
+      [runners.cache]
+        Type = "s3"
+        Path = "runner"
+        Shared = true
+        [runners.cache.s3]
+          ServerAddress = "s3.amazonaws.com"
+          BucketName = "${bucket_name}"
+          BucketLocation = "${bucket_region}"
+          Insecure = false
+          AuthenticationType = "iam"

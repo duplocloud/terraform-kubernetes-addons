@@ -1,0 +1,6 @@
+nodeSelector:
+  tenantname: ${namespace}
+agent:
+  resourceClasses:
+    namespace/my-rc:
+      token: ${resource_class_token}
