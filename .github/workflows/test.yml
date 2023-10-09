@@ -7,9 +7,18 @@ on:
 
 jobs:
 
-  gha_example:
-    name: Github Actions Controller
+  test_modules:
+    name: Test Modules
     uses: ./.github/workflows/module_test.yml
     secrets: inherit
+    strategy:
+      matrix:
+        module:
+        - cert-manager
+        - github-actions-controller
+        - circleci-runner
+        - gitlab-runner
+        - keda
+        - rabbitmq-operator
     with:
-      module_name: github-actions-controller
+      module_name: ${{ matrix.module }}
