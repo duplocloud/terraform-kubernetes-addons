@@ -19,7 +19,7 @@ resource "helm_release" "gitlab-runner" {
   name        = var.name
   repository  = "https://charts.gitlab.io"
   chart       = "gitlab-runner"
-  version     = var.version
+  version     = var.chart_version
   namespace   = local.namespace
   values = [
     yamlencode(local.values),

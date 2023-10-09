@@ -1,0 +1,58 @@
+name: Run TF Example 
+
+on:
+  workflow_call:
+    inputs:
+      tf_example:
+        required: true
+        type: string
+
+jobs:
+  tflint:
+    name: TF Lint
+    runs-on: ubuntu-latest
+    env:
+      EXAMPLE_DIR: ./examples/${{ inputs.tf_example }}
+    steps:
+    - uses: actions/checkout@v3
+      name: Checkout source code
+
+    # - uses: actions/cache@v3
+    #   name: Cache plugin dir
+    #   with:
+    #     path: ~/.tflint.d/plugins
+    #     key: ubuntu-latest-tflint-${{ hashFiles('.tflint.hcl') }}
+
+    - uses: terraform-linters/setup-tflint@v3
+      name: Setup TFLint
+      with:
+        tflint_version: v0.44.1
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Show versions
+      run: |
+        terraform version
+        tflint --version
+
+    - name: Info
+      working-directory: ${{ env.EXAMPLE_DIR }}
+      run: |
+        pwd
+        ls -la ./
+
+    - name: Init TFLint
+      run: tflint --init
+      working-directory: ${{ env.EXAMPLE_DIR }}
+      env:
+        # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Run TFLint
+      working-directory: ${{ env.EXAMPLE_DIR }}
+      run: tflint -f compact
+
+    - name: TF Init
+      working-directory: ${{ env.EXAMPLE_DIR }}
+      run: terraform init

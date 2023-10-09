@@ -9,7 +9,7 @@ resource "helm_release" "kedacore" {
   name        = "keda"
   repository  = "https://kedacore.github.io/charts"
   chart       = "keda"
-  version     = var.version
+  version     = var.chart_version
   namespace   = local.namespace
   values = [
     yamlencode(local.values),

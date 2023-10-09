@@ -3,7 +3,7 @@ variable "tenant_name" {
   type = string
 }
 
-variable "version" {
+variable "chart_version" {
   description = "The version of the Cert Manager Helm chart to install"
   type = string
   default = "2.12.0"

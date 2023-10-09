@@ -1,0 +1,13 @@
+name: terraform-lint
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+
+  gha_example:
+    uses: ./.github/workflows/example.yml
+    with:
+      tf_example: github-actions-controller

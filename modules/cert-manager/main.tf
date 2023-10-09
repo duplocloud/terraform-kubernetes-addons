@@ -9,7 +9,7 @@ resource "helm_release" "cert_manager" {
   name        = "cert-manager"
   repository  = "https://charts.jetstack.io"
   chart       = "cert-manager"
-  version     = var.version
+  version     = var.chart_version
   namespace   = local.namespace
   values = [
     yamlencode(local.values),

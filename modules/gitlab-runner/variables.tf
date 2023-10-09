@@ -3,7 +3,7 @@ variable "tenant_name" {
   type = string
 }
 
-variable "version" {
+variable "chart_version" {
   description = "The version of the Helm chart to install"
   type = string
   default = "0.54.0"
