@@ -1,4 +1,4 @@
-name: terraform-lint
+name: Test Modules
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 jobs:
 
   gha_example:
+    name: Github Actions Controller
     uses: ./.github/workflows/example.yml
     with:
       tf_example: github-actions-controller

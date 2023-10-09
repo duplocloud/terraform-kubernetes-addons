@@ -1,4 +1,4 @@
-name: Run TF Example 
+name: Run TF Module Test 
 
 on:
   workflow_call:
@@ -12,6 +12,7 @@ jobs:
     name: TF Lint
     runs-on: ubuntu-latest
     env:
+      MODULE_DIR: ./modules/${{ inputs.tf_example }}
       EXAMPLE_DIR: ./examples/${{ inputs.tf_example }}
     steps:
     - uses: actions/checkout@v3
@@ -36,23 +37,16 @@ jobs:
         terraform version
         tflint --version
 
-    - name: Info
-      working-directory: ${{ env.EXAMPLE_DIR }}
-      run: |
-        pwd
-        ls -la ./
+    - name: TF Validate Module
+      uses: ./.github/actions/tf_validate
+      with:
+        wkdir: ${{ env.MODULE_DIR }}
 
-    - name: Init TFLint
-      run: tflint --init
-      working-directory: ${{ env.EXAMPLE_DIR }}
-      env:
-        # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
-        GITHUB_TOKEN: ${{ github.token }}
+    - name: TF Validate Example for Module
+      uses: ./.github/actions/tf_validate
+      with:
+        wkdir: ${{ env.EXAMPLE_DIR }}
 
-    - name: Run TFLint
+    - name: Plan the Example
       working-directory: ${{ env.EXAMPLE_DIR }}
-      run: tflint -f compact
-
-    - name: TF Init
-      working-directory: ${{ env.EXAMPLE_DIR }}
-      run: terraform init
+      run: terraform plan
