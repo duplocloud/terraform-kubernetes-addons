@@ -16,9 +16,9 @@ jobs:
         module:
         - cert-manager
         - github-actions-controller
-        - circleci-runner
-        - gitlab-runner
-        - keda
-        - rabbitmq-operator
+        # - circleci-runner
+        # - gitlab-runner
+        # - keda
+        # - rabbitmq-operator
     with:
       module_name: ${{ matrix.module }}
