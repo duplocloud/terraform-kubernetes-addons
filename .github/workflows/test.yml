@@ -10,5 +10,6 @@ jobs:
   gha_example:
     name: Github Actions Controller
     uses: ./.github/workflows/module_test.yml
+    secrets: inherit
     with:
       module_name: github-actions-controller

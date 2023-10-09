@@ -6,14 +6,21 @@ on:
       module_name:
         required: true
         type: string
+    secrets:
+      DUPLO_TOKEN:
+        required: true
+        description: The token to use for the Duplo API
 
 jobs:
-  tflint:
-    name: TF Lint
+  tfmodule:
+    name: Module Test
     runs-on: ubuntu-latest
     env:
       MODULE_DIR: ./modules/${{ inputs.module_name }}
       EXAMPLE_DIR: ./examples/${{ inputs.module_name }}
+      DUPLO_TOKEN: ${{ secrets.DUPLO_TOKEN }}
+      DUPLO_HOST: ${{ vars.DUPLO_HOST }}
+      DUPLO_TENANT: ${{ vars.DUPLO_TENANT }}
     steps:
     - uses: actions/checkout@v3
       name: Checkout source code
