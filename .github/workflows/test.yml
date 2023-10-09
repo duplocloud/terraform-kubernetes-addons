@@ -16,8 +16,8 @@ jobs:
         module:
         - cert-manager
         - github-actions-controller
+        - gitlab-runner
         # - circleci-runner
-        # - gitlab-runner
         # - keda
         # - rabbitmq-operator
     with:

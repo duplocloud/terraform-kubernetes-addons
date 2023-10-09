@@ -3,6 +3,8 @@ locals {
   values = yamldecode(templatefile("${path.module}/values.yaml", {
     namespace = local.namespace
     release_name = var.name
+    bucket_name = var.bucket_name
+    bucket_region = var.bucket_region
   }))
 }
 

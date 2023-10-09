@@ -44,5 +44,6 @@ data "duplocloud_eks_credentials" "current" {
 module "gitlab_runner" {
   source = "../../modules/gitlab-runner"
   tenant_name = data.duplocloud_tenant.current.name
+  tenant_id = data.duplocloud_tenant.current.id
   runner_token = "example"
 }
