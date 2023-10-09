@@ -20,8 +20,8 @@ jobs:
         # - circleci-runner
         # - bitbucket-runner
     env:
-      MODULE_DIR: ./modules/${{ inputs.module_name }}
-      EXAMPLE_DIR: ./examples/${{ inputs.module_name }}
+      MODULE_DIR: ./modules/${{ matrix.module }}
+      EXAMPLE_DIR: ./examples/${{ matrix.module }}
       DUPLO_TOKEN: ${{ secrets.DUPLO_TOKEN }}
       DUPLO_HOST: ${{ vars.DUPLO_HOST }}
       DUPLO_TENANT: ${{ vars.DUPLO_TENANT }}
