@@ -42,6 +42,6 @@ data "duplocloud_eks_credentials" "current" {
 }
 
 module "gha_controller" {
-  source = "../../modules/github-action-controller"
+  source = "../../modules/github-actions-controller"
   tenant_name = data.duplocloud_tenant.current.name
 }
