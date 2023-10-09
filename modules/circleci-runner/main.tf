@@ -5,7 +5,7 @@ locals {
   }))
 }
 
-resource "helm_release" "github_actions_controller" {
+resource "helm_release" "circleci_agent" {
   name        = "container-agent"
   repository  = "https://packagecloud.io/circleci/container-agent/helm"
   chart       = "container-agent"
