@@ -14,3 +14,9 @@ variable "values" {
   type        = map(any)
   default     = {}
 }
+
+variable "resource_class_token" {
+  description = "The resource class token to use for the CircleCI runner"
+  type        = string
+  default = "sometoken"
+}
