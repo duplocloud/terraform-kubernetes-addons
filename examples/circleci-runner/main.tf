@@ -7,7 +7,7 @@ terraform {
     }
     duplocloud = {
       source  = "duplocloud/duplocloud"
-      version = "> 0.9.2"
+      version = ">= 0.10.0"
     }
     helm = {
       source  = "hashicorp/helm"
@@ -42,6 +42,7 @@ data "duplocloud_eks_credentials" "current" {
 }
 
 module "cert_manager" {
-  source = "../../modules/cert-manager"
+  source = "../../modules/circleci-runner"
   tenant_name = data.duplocloud_tenant.current.name
+  resource_class_token = "sometoken"
 }

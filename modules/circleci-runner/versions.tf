@@ -3,7 +3,7 @@ terraform {
   required_providers {
     duplocloud = {
       source  = "duplocloud/duplocloud"
-      version = ">= 0.10.2"
+      version = ">= 0.10.0"
     }
     helm = {
       source  = "hashicorp/helm"
