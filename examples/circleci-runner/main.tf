@@ -29,7 +29,7 @@ provider "helm" {
 }
 
 variable "tenant_name" {
-  type = string
+  type    = string
   default = "tf-tests"
 }
 
@@ -42,7 +42,7 @@ data "duplocloud_eks_credentials" "current" {
 }
 
 module "cert_manager" {
-  source = "../../modules/circleci-runner"
-  tenant_name = data.duplocloud_tenant.current.name
+  source               = "../../modules/circleci-runner"
+  tenant_name          = data.duplocloud_tenant.current.name
   resource_class_token = "sometoken"
 }

@@ -35,11 +35,11 @@ resource "kubernetes_deployment_v1" "bitbucket_runner" {
       metadata {
         labels = local.labels
       }
-      node_selector = {
-        tenantname = local.namespace
-      }
       spec {
         restart_policy = "Always"
+        node_selector = {
+          tenantname = local.namespace
+        }
 
         # shared volumes
         volume {

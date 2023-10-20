@@ -7,7 +7,7 @@ terraform {
     }
     duplocloud = {
       source  = "duplocloud/duplocloud"
-      version = "> 0.9.40"
+      version = ">= 0.10.0"
     }
     helm = {
       source  = "hashicorp/helm"
@@ -29,7 +29,7 @@ provider "helm" {
 }
 
 variable "tenant_name" {
-  type = string
+  type    = string
   default = "tf-tests"
 }
 
@@ -42,8 +42,8 @@ data "duplocloud_eks_credentials" "current" {
 }
 
 module "gitlab_runner" {
-  source = "../../modules/gitlab-runner"
-  tenant_name = data.duplocloud_tenant.current.name
-  tenant_id = data.duplocloud_tenant.current.id
+  source       = "../../modules/gitlab-runner"
+  tenant_name  = data.duplocloud_tenant.current.name
+  tenant_id    = data.duplocloud_tenant.current.id
   runner_token = "example"
 }

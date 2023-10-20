@@ -41,7 +41,15 @@ data "duplocloud_eks_credentials" "current" {
   plan_id = data.duplocloud_tenant.current.plan_id
 }
 
-module "gha_controller" {
-  source      = "../../modules/github-actions-controller"
+module "cert_manager" {
+  source      = "../../modules/bitbucket-runner"
   tenant_name = data.duplocloud_tenant.current.name
+  tenant_id   = data.duplocloud_tenant.current.id
+  auth = {
+    ACCOUNT_UUID        = ""
+    REPOSITORY_UUID     = ""
+    RUNNER_UUID         = ""
+    OAUTH_CLIENT_ID     = ""
+    OAUTH_CLIENT_SECRET = ""
+  }
 }
