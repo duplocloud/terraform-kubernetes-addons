@@ -1,4 +1,4 @@
-# Github Actions Controller  
+# Github Actions Controller 
 
 Installs the Github Actions Controller into EKS using Helm. 
 
