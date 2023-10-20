@@ -6,9 +6,9 @@ locals {
 }
 
 resource "helm_release" "github_actions_controller" {
-  name        = "github-actions-controller"
+  name        = "actions-runner-controller"
   repository  = "https://actions-runner-controller.github.io/actions-runner-controller"
-  chart       = "github-actions-controller"
+  chart       = "actions-runner-controller"
   version     = var.chart_version
   namespace   = local.namespace
   values = [
