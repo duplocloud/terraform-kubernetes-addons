@@ -6,11 +6,11 @@ locals {
 }
 
 resource "helm_release" "kedacore" {
-  name        = "keda"
-  repository  = "https://kedacore.github.io/charts"
-  chart       = "keda"
-  version     = var.chart_version
-  namespace   = local.namespace
+  name       = "keda"
+  repository = "https://kedacore.github.io/charts"
+  chart      = "keda"
+  version    = var.chart_version
+  namespace  = local.namespace
   values = [
     yamlencode(local.values),
     yamlencode(var.values)

@@ -1,16 +1,16 @@
 variable "tenant_name" {
   description = "The name of the tenant"
-  type = string
+  type        = string
 }
 
 variable "chart_version" {
   description = "The version of the Helm chart to install"
-  type = string
-  default = "0.23.3"
+  type        = string
+  default     = "0.23.3"
 }
 
 variable "values" {
   description = "Additional values to pass to the Github Actions Controller Helm chart"
-  type = map
-  default = {}
+  type        = map(any)
+  default     = {}
 }

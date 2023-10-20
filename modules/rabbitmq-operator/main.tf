@@ -6,11 +6,11 @@ locals {
 }
 
 resource "helm_release" "rabbitmq-operator" {
-  name        = "rabbitmq-operator"
-  repository  = "oci://registry-1.docker.io/bitnamicharts"
-  chart       = "rabbitmq-cluster-operator"
-  version     = var.chart_version
-  namespace   = local.namespace
+  name       = "rabbitmq-operator"
+  repository = "oci://registry-1.docker.io/bitnamicharts"
+  chart      = "rabbitmq-cluster-operator"
+  version    = var.chart_version
+  namespace  = local.namespace
   values = [
     yamlencode(local.values),
     yamlencode(var.values)

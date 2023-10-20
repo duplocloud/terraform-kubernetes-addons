@@ -8,7 +8,7 @@ locals {
 }
 
 resource "duplocloud_k8_secret" "bitbucket_runner" {
-  tenant_id = var.tenant_id
+  tenant_id   = var.tenant_id
   secret_name = var.name
   secret_type = "Opaque"
   secret_data = jsonencode(var.auth)
@@ -16,9 +16,9 @@ resource "duplocloud_k8_secret" "bitbucket_runner" {
 
 resource "kubernetes_deployment_v1" "bitbucket_runner" {
   metadata {
-    name = var.name
+    name      = var.name
     namespace = local.namespace
-    labels = local.labels
+    labels    = local.labels
     annotations = {
       "kubernetes.io/description" : "Bitbucket self hosted runner"
     }
@@ -45,7 +45,7 @@ resource "kubernetes_deployment_v1" "bitbucket_runner" {
         volume {
           name = "tmp"
           empty_dir {}
-        } 
+        }
         volume {
           name = "docker-containers"
           empty_dir {}
@@ -54,17 +54,17 @@ resource "kubernetes_deployment_v1" "bitbucket_runner" {
           name = "var-run"
           empty_dir {}
         }
-        
+
         # main bitbucket runner
         container {
           image = var.image
           name  = "runner"
           env {
-            name = "WORKING_DIRECTORY"
+            name  = "WORKING_DIRECTORY"
             value = "/tmp"
           }
           env {
-            name = "RUNTIME_PREREQUISITES_ENABLED"
+            name  = "RUNTIME_PREREQUISITES_ENABLED"
             value = "true"
           }
           env_from {
@@ -73,15 +73,15 @@ resource "kubernetes_deployment_v1" "bitbucket_runner" {
             }
           }
           volume_mount {
-            name = "docker-containers"
+            name       = "docker-containers"
             mount_path = "/var/lib/docker/containers"
           }
           volume_mount {
-            name = "var-run"
+            name       = "var-run"
             mount_path = "/var/run"
           }
           volume_mount {
-            name = "tmp"
+            name       = "tmp"
             mount_path = "/tmp"
           }
         }
@@ -94,15 +94,15 @@ resource "kubernetes_deployment_v1" "bitbucket_runner" {
             privileged = true
           }
           volume_mount {
-            name = "docker-containers"
+            name       = "docker-containers"
             mount_path = "/var/lib/docker/containers"
           }
           volume_mount {
-            name = "var-run"
+            name       = "var-run"
             mount_path = "/var/run"
           }
           volume_mount {
-            name = "tmp"
+            name       = "tmp"
             mount_path = "/tmp"
           }
         }

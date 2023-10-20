@@ -6,11 +6,11 @@ locals {
 }
 
 resource "helm_release" "github_actions_controller" {
-  name        = "actions-runner-controller"
-  repository  = "https://actions-runner-controller.github.io/actions-runner-controller"
-  chart       = "actions-runner-controller"
-  version     = var.chart_version
-  namespace   = local.namespace
+  name       = "actions-runner-controller"
+  repository = "https://actions-runner-controller.github.io/actions-runner-controller"
+  chart      = "actions-runner-controller"
+  version    = var.chart_version
+  namespace  = local.namespace
   values = [
     yamlencode(local.values),
     yamlencode(var.values)
