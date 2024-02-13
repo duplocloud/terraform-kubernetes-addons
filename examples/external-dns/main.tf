@@ -41,6 +41,7 @@ terraform {
 }
 
 ## Provider configs
+
 # Configure helm provider for chart deployment
 provider "helm" {
   kubernetes {
