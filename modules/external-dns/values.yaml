@@ -1,0 +1,4 @@
+provider: ${provider}
+namespace: ${namespace}
+serviceAccount.create: false
+serviceAccount.name: ${service_account_name}
