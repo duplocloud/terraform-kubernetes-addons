@@ -6,7 +6,7 @@ data "duplocloud_tenant" "current" {
 }
 
 # Get EKS credentials for helm provider
-data "duplocloud_eks_credentials" "this" {
+data "duplocloud_eks_credentials" "current" {
   plan_id = data.duplocloud_tenant.current.plan_id
 }
 
@@ -45,9 +45,9 @@ terraform {
 # Configure helm provider for chart deployment
 provider "helm" {
   kubernetes {
-    host                   = data.duplocloud_eks_credentials.this.endpoint
-    cluster_ca_certificate = data.duplocloud_eks_credentials.this.ca_certificate_data
-    token                  = data.duplocloud_eks_credentials.this.token
+    host                   = data.duplocloud_eks_credentials.current.endpoint
+    cluster_ca_certificate = data.duplocloud_eks_credentials.current.ca_certificate_data
+    token                  = data.duplocloud_eks_credentials.current.token
   }
 }
 
