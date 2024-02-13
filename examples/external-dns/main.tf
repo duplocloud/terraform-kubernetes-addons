@@ -95,7 +95,7 @@ data "aws_iam_policy_document" "service_extension" {
 
 module "tenant-role" {
   source          = "github.com/duplocloud/terraform-duplocloud-components//modules/tenant-role-extension"
-  tenant_name     = local.tenant_name
+  tenant_name     = var.tenant_name
   iam_policy_json = data.aws_iam_policy_document.service_extension.json
 }
 
