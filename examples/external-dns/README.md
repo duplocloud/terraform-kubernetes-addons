@@ -8,7 +8,7 @@ You will need to configure:
 * aws - for IAM role extension
 
 ## Helm Chart Usage
-Please review the documentation for the Bitnami chart and the external-dns documentation:
+Please review the documentation for the Bitnami chart and external-dns:
 https://github.com/kubernetes-sigs/external-dns
 https://github.com/bitnami/charts/tree/main/bitnami/external-dns
 
