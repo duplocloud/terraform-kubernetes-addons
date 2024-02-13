@@ -1,5 +1,5 @@
 # Example External DNS Installation
-External DNS watches Kubernetes ingress and load-balancer services and automatically manages DNS for them.
+External DNS watches Kubernetes ingresses and load-balancer services and automatically manages DNS for them.
 
 ## Providers
 You will need to configure:
