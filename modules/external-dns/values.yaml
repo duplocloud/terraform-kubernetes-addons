@@ -1,3 +1,4 @@
 namespace: ${namespace}
-serviceAccount.create: false
-serviceAccount.name: ${service_account_name}
+serviceAccount:
+  create: false
+  name: ${service_account_name}
