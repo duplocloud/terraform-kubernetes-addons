@@ -74,7 +74,6 @@ provider "aws" {
 module "external_dns" {
   source       = "../../modules/external-dns"
   tenant_name  = var.tenant_name
-  dns_provider = "aws"
   values = {
     "aws.zone" : "public",
     "txtOwnerId" : data.aws_route53_zone.selected.id

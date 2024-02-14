@@ -3,7 +3,6 @@ locals {
   values = yamldecode(templatefile("${path.module}/values.yaml", {
     namespace              = local.namespace,
     service_account_name   = local.namespace,
-    provider               = var.dns_provider
   }))
 }
 
