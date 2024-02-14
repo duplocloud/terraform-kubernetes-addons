@@ -1,3 +1,9 @@
+## locals
+
+locals {
+  plan_id = data.duplocloud_tenant.current.plan_id
+}
+
 ## Datasources
 
 # Get tenant info, typically from the current workspace
@@ -7,17 +13,17 @@ data "duplocloud_tenant" "current" {
 
 # Get EKS credentials for helm provider
 data "duplocloud_eks_credentials" "current" {
-  plan_id = data.duplocloud_tenant.current.plan_id
+  plan_id = local.plan_id
 }
 
 # Get infrastructure to get the region for aws provider
 data "duplocloud_infrastructure" "current" {
-  infra_name = data.duplocloud_tenant.current.plan_id
+  infra_name = local.plan_id
 }
 
 # Get the route53 zone information
 data "aws_route53_zone" "selected" {
-  name         = var.public_dns_domain
+  name = var.public_dns_domain
 }
 
 ## Provider versions
@@ -37,6 +43,11 @@ terraform {
       source  = "hashicorp/helm"
       version = ">= 2.11.0"
     }
+  }
+  backend "s3" {
+    workspace_key_prefix = "duplocloud/addons"
+    key                  = "external-dns"
+    encrypt              = true
   }
 }
 
@@ -61,13 +72,13 @@ provider "aws" {
 # Deploy external-dns module for managing Route53 records.  
 # See https://github.com/kubernetes-sigs/external-dns/tree/master/docs/tutorials
 module "external_dns" {
-  source = "../../modules/external-dns"
-  tenant_name = var.tenant_name
+  source       = "../../modules/external-dns"
+  tenant_name  = var.tenant_name
   dns_provider = "aws"
   values = {
-    "aws.zone": "public",
-    "txtOwnerId": data.aws_route53_zone.selected.id
-    "domainFilters[0]": var.public_dns_domain
+    "aws.zone" : "public",
+    "txtOwnerId" : data.aws_route53_zone.selected.id
+    "domainFilters[0]" : var.public_dns_domain
   }
 }
 
@@ -89,7 +100,7 @@ data "aws_iam_policy_document" "service_extension" {
       "route53:ListResourceRecordSets",
       "route53:ListTagsForResource"
     ]
-    resources = [ "*" ]
+    resources = ["*"]
   }
 }
 
