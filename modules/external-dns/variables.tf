@@ -15,9 +15,4 @@ variable "values" {
   default     = {}
 }
 
-variable "dns_provider" {
-  description = "The DNS provider to use. See https://github.com/bitnami/charts/blob/main/bitnami/external-dns/values.yaml"
-  type        = string
-  default     = "aws"
-}
 
