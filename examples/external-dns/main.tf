@@ -2,9 +2,16 @@
 
 locals {
   plan_id = data.duplocloud_tenant.current.plan_id
+  cluster_name = data.duplocloud_plan.plan.kubernetes_config[0].name
 }
 
 ## Datasources
+
+# Get the plan info to get the cluster name
+data "duplocloud_plan" "plan" {
+  plan_id = local.plan_id
+}
+
 
 # Get tenant info, typically from the current workspace
 data "duplocloud_tenant" "current" {
@@ -78,7 +85,7 @@ module "external_dns" {
   route53_zone_arn = data.aws_route53_zone.selected.arn
   values = {
     "aws.zone" : "public",
-    "txtOwnerId" : data.aws_route53_zone.selected.id
+    "txtOwnerId" : local.cluster_name,
     "domainFilters[0]" : var.public_dns_domain
   }
 }
