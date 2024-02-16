@@ -1,7 +1,7 @@
 ## locals
 
 locals {
-  plan_id = data.duplocloud_tenant.current.plan_id
+  plan_id      = data.duplocloud_tenant.current.plan_id
   cluster_name = data.duplocloud_plan.plan.kubernetes_config[0].name
 }
 
