@@ -94,7 +94,7 @@ module "external_dns" {
 variable "public_dns_domain" {
   description = "The public DNS domain to manage"
   type        = string
-  default     = "example.com"
+  default     = "qa-apps.duplocloud.net"
 }
 
 variable "tenant_name" {
