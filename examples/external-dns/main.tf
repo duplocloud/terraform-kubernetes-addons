@@ -37,11 +37,11 @@ terraform {
     }
     duplocloud = {
       source  = "duplocloud/duplocloud"
-      version = ">= 0.10.0"
+      version = "~> 0.10.0"
     }
     helm = {
       source  = "hashicorp/helm"
-      version = ">= 2.11.0"
+      version = "~> 2.11.0"
     }
   }
   backend "s3" {
