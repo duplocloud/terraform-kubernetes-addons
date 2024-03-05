@@ -18,11 +18,12 @@ resource "helm_release" "external-dns" {
   version    = var.chart_version
   namespace  = local.namespace
   values = [
-    yamlencode(local.values)
+    yamlencode(local.values),
+    yamlencode(var.values)
   ]
 
   dynamic "set" {
-    for_each = var.values
+    for_each = var.sets
     content {
       name  = set.key
       value = set.value

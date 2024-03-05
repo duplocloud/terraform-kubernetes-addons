@@ -83,7 +83,7 @@ module "external_dns" {
   tenant_name      = var.tenant_name
   dns_provider     = "aws"
   route53_zone_arn = data.aws_route53_zone.selected.arn
-  values = {
+  sets = {
     "aws.zoneType" : "public",
     "txtOwnerId" : local.cluster_name,
     "domainFilters[0]" : var.public_dns_domain
