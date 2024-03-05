@@ -10,7 +10,7 @@ variable "chart_version" {
 }
 
 variable "values" {
-  description = "Additional raw values to pass to the Helm chart"
+  description = "Additional raw yaml values to pass to the Helm chart"
   type        = list(string)
   default     = []
 }
@@ -34,7 +34,7 @@ variable "route53_zone_arn" {
 }
 
 variable "sets" {
-  description = "Additional Helm set values to pass to the Helm, using dotted notation"
+  description = "Additional Helm values to pass to the Helm chart"
   type        = map(any)
   default     = {}
 }
