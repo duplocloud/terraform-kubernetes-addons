@@ -11,8 +11,8 @@ variable "chart_version" {
 
 variable "values" {
   description = "Additional raw yaml values to pass to the Helm chart"
-  type        = list(string)
-  default     = [""]
+  type        = list
+  default     = []
 }
 
 variable "service_account" {
