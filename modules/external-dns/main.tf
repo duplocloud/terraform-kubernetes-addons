@@ -19,7 +19,7 @@ resource "helm_release" "external-dns" {
   namespace  = local.namespace
   values = [
     yamlencode(local.values),
-    yamlencode(var.values)
+    var.values
   ]
 
   dynamic "set" {
