@@ -10,9 +10,9 @@ variable "chart_version" {
 }
 
 variable "values" {
-  description = "Additional values to pass to the Helm chart"
-  type        = map(any)
-  default     = {}
+  description = "Additional raw yaml values to pass to the Helm chart"
+  type        = list(string)
+  default     = null
 }
 
 variable "service_account" {
@@ -31,5 +31,10 @@ variable "route53_zone_arn" {
   description = "The ARN of the Route53 zone to manage (AWS only)"
   type        = string
   default     = null
+}
 
+variable "sets" {
+  description = "Additional Helm values to pass to the Helm chart"
+  type        = map(any)
+  default     = {}
 }

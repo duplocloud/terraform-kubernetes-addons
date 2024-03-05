@@ -21,4 +21,12 @@ resource "helm_release" "external-dns" {
     yamlencode(local.values),
     yamlencode(var.values)
   ]
+
+  dynamic "set" {
+    for_each = var.sets
+    content {
+      name  = set.key
+      value = set.value
+    }
+  }
 }
