@@ -24,6 +24,6 @@ variable "namespace" {
 
 variable "sets" {
   description = "Additional Helm sets to pass to the keda helm chart"
-  type        = map(any)
+  type        = map(string)
   default     = {}
 }
