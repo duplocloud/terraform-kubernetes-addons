@@ -1,7 +1,13 @@
-namespace: ${namespace}
-provider: ${provider}
+policy: sync
+txtOwnerId: ${infra_name}
+provider:
+  name: ${provider}
+domainFilters:
+- ${domain}
 serviceAccount:
   create: false
-  name: ${service_account_name}
+  name: ${sa_name}
+  # annotations:
+  #   iam.gke.io/gcp-service-account: ${sa_email}
 nodeSelector:
   tenantname: ${namespace}
