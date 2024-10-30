@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "service_extension" {
       "route53:ChangeResourceRecordSets"
     ]
     resources = [
-      var.route53_zone_arn
+      data.aws_route53_zone.this[0].arn
     ]
   }
   statement {
