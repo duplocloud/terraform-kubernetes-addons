@@ -1,8 +1,7 @@
 locals {
-  infra_name  = terraform.workspace
-  tenant_name = "argocd"
-  tenant_id   = duplocloud_tenant.this.tenant_id
-  namespace   = "duploservices-${local.tenant_name}"
+  infra_name  = data.duplocloud_tenant.this.plan_id
+  tenant_id   = data.duplocloud_tenant.this.id
+  namespace   = "duploservices-${var.tenant_name}"
   region      = data.duplocloud_infrastructure.this.region
   vpc_sg      = join(",", [for obj in data.duplocloud_infrastructure.this.security_groups : obj.id])
   vpn_cidr    = "${data.aws_cloudformation_stack.openvpn.outputs["PrivateIp"]}/32"
@@ -25,6 +24,10 @@ data "duplocloud_eks_credentials" "this" {
   plan_id = local.infra_name
 }
 
+data "duplocloud_tenant" "this" {
+  name = var.tenant_name
+}
+
 data "duplocloud_infrastructure" "this" {
   infra_name = local.infra_name
 }
@@ -38,8 +41,7 @@ data "duplocloud_tenant_internal_subnets" "this" {
 }
 
 data "aws_security_group" "alb" {
-  name = "${local.namespace}-lb"
-  depends_on = [ duplocloud_tenant.this ]
+  name = "${local.namespace}-alb"
 }
 
 # so we can get the vpn cidr

@@ -33,7 +33,7 @@ server:
       alb.ingress.kubernetes.io/load-balancer-name: ${workspace}-argocd
       alb.ingress.kubernetes.io/group.name: ${workspace}-argocd
       alb.ingress.kubernetes.io/scheme: internal
-      alb.ingress.kubernetes.io/ssl-redirect: "true"
+      alb.ingress.kubernetes.io/ssl-redirect: "443"
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/certificate-arn: ${cert_arn}
       alb.ingress.kubernetes.io/subnets: ${subnets}
@@ -58,6 +58,9 @@ dex:
 configs:
   rbac:
     policy.default: role:admin
+  params:
+    application.namespaces: "duploservices-*"
+    applicationsetcontroller.namespaces: "duploservices-*"
   cm:
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/google/#openid-connect-using-dex
     url:  https://${domain}

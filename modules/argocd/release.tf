@@ -4,10 +4,9 @@ resource "helm_release" "release" {
   chart            = "argo-cd"
   version          = "7.6.12"
   namespace        = local.context.namespace
-  create_namespace = true
+  # create_namespace = true
   wait             = true
   values = [
     yamlencode(local.values)
   ]
-  depends_on = [ module.nodes ]
 }

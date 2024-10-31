@@ -2,10 +2,6 @@
 
 Install the ArgoCD Operator in the cluster.
 
-## Dependencies
-
- - [admin-tenant](../admin-tenant/README.md)
-
 ## Notes
 
 **View the Repo**:
