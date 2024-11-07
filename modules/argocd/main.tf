@@ -10,7 +10,7 @@ locals {
     workspace       = local.infra_name
     namespace       = local.namespace
     domain          = "${var.domain_prefix}${data.duplocloud_plan_settings.this.dns_setting[0].internal_dns_suffix}"
-    security_groups = "${data.aws_security_group.alb.id}, ${local.vpc_sg}"
+    security_groups = "${data.aws_security_group.alb.id},${local.vpc_sg}"
     subnets         = join(",", data.duplocloud_tenant_internal_subnets.this.subnet_ids)
     cert_arn        = var.cert_name != null ? data.duplocloud_plan_certificate.this[0].arn : data.duplocloud_plan_certificates.this[0].certificates[0].arn
     google_oauth    = var.google_oauth

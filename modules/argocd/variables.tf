@@ -28,10 +28,11 @@ variable "google_oauth" {
 variable "github_app" {
   description = "The credentials for github."
   type = object({
-    url             = optional(string, "https://github.com/duplocloud")
+    url             = optional(string, null)
     app_id          = optional(string, null)
     installation_id = optional(string, null)
     private_key     = optional(string, null)
+    repositories    = optional(list(string), [])
   })
   nullable = true
   default  = null
