@@ -38,3 +38,4 @@ target/**
 .envrc
 *.log
 *.plan
+.qodo

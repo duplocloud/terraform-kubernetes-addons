@@ -37,9 +37,10 @@ resource "kubernetes_deployment_v1" "bitbucket_runner" {
       }
       spec {
         restart_policy = "Always"
-        node_selector = {
+        node_selector = length(var.node_selector) > 0 ? var.node_selector : {
           tenantname = local.namespace
         }
+
 
         # shared volumes
         volume {

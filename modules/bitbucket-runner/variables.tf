@@ -35,3 +35,9 @@ variable "auth" {
     OAUTH_CLIENT_SECRET = string
   })
 }
+
+variable "node_selector" {
+  description = "The node selector for the runner"
+  type        = map(string)
+  default     = {}
+}
