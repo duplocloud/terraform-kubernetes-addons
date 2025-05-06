@@ -34,7 +34,8 @@ data "duplocloud_infrastructure" "this" {
   infra_name = data.duplocloud_tenant.this.plan_id
 }
 
-# Deploy external-dns module for managing Route53 records.  
+# If you use the Helm chart to manage the ingress (instead of DuploCloud):
+# Deploy external-dns module for managing Route53 records.
 # See https://github.com/kubernetes-sigs/external-dns/tree/master/docs/tutorials
 module "argocd" {
   source      = "../../modules/argocd"
