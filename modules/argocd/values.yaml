@@ -90,7 +90,6 @@ configs:
       githubAppInstallationID: '${github_app.installation_id}'
       githubAppPrivateKey: |
         ${indent(8, github_app.private_key)}
-  %{ endif }
   repositories:
     bitnami:
       url: registry-1.docker.io/bitnamicharts
@@ -100,4 +99,4 @@ configs:
     ${repo}:
       url: ${github_app.url}/${repo}.git
     %{ endfor }
-
+  %{ endif }
