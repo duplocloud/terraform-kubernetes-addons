@@ -38,4 +38,5 @@ target/**
 .envrc
 *.log
 *.plan
+*.auto.tfvars
 .qodo

@@ -1,0 +1,106 @@
+# https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
+
+# fullnameOverride: argocd
+
+global:
+  domain: ${domain}
+  nodeSelector:
+    tenantname: ${namespace}
+  additionalLabels:
+    revision: "01" # incrementing this just forces a change if none is seen
+
+redis-ha:
+  enabled: false
+
+redis:
+ enabled: true
+
+controller:
+  replicas: 1
+
+server:
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+  ingress:
+    enabled: false # See ingress.tf
+
+    # This module uses a duplocloud_k8_ingress Terraform resource to manage the ingress. You can let the Helm chart
+    # manage the ingress instead, but then you'll need to create a DNS alias for the LB and wire in the right security
+    # groups and subnets yourself. Here's an example of how you could do that:
+    # enabled: true
+    # controller: aws
+    # ingressClassName: alb
+    # annotations:
+    #   # alb annotations: https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.8/guide/ingress/annotations/
+    #   alb.ingress.kubernetes.io/load-balancer-name: <workspace>-argocd
+    #   alb.ingress.kubernetes.io/group.name: <workspace>-argocd
+    #   alb.ingress.kubernetes.io/scheme: internal
+    #   alb.ingress.kubernetes.io/target-type: ip
+    #   alb.ingress.kubernetes.io/certificate-arn: <cert_arn>
+    #   alb.ingress.kubernetes.io/subnets: <subnets>
+    #   alb.ingress.kubernetes.io/security-groups: <security_groups>
+    #   alb.ingress.kubernetes.io/backend-protocol: HTTP
+    #   alb.ingress.kubernetes.io/ssl-redirect: "443"
+    #   alb.ingress.kubernetes.io/listen-ports: >-
+    #     [{"HTTP": 80}, {"HTTPS": 443}]
+
+    aws:
+      serviceType: ClusterIP # <- Used with target-type: ip
+      backendProtocolVersion: GRPC
+
+repoServer:
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+  emptyDir:
+    sizeLimit: "2Gi"
+
+
+applicationSet:
+  replicas: 1
+
+dex:
+  enabled: true
+
+configs:
+  rbac:
+    policy.default: role:admin
+  params:
+    server.insecure: true
+    application.namespaces: "duploservices-*"
+    # applicationsetcontroller.namespaces: "duploservices-*"
+  cm:
+    # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/google/#openid-connect-using-dex
+    url:  https://${domain}
+    %{if google_oauth != null }
+    dex.config: |
+
+      connectors:
+      - name: Google
+        id: google
+        type: oidc
+        config:
+          issuer: https://accounts.google.com
+          clientID: ${google_oauth.client_id}
+          clientSecret: ${google_oauth.client_secret}
+          redirectURI: https://${domain}/api/dex/callback
+    %{ endif }
+  %{if github_app != null }
+  credentialTemplates:
+    github:
+      url: ${github_app.url}
+      githubAppID: '${github_app.app_id}'
+      githubAppInstallationID: '${github_app.installation_id}'
+      githubAppPrivateKey: |
+        ${indent(8, github_app.private_key)}
+  repositories:
+    bitnami:
+      url: registry-1.docker.io/bitnamicharts
+      type: helm
+      enableOCI: "true"
+    %{ for repo in github_app.repositories }
+    ${repo}:
+      url: ${github_app.url}/${repo}.git
+    %{ endfor }
+  %{ endif }
