@@ -39,3 +39,4 @@ target/**
 *.log
 *.plan
 *.auto.tfvars
+.qodo
