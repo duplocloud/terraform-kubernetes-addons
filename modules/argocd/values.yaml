@@ -23,24 +23,28 @@ server:
     enabled: false
     minReplicas: 1
   ingress:
-    enabled: true
-    controller: aws
-    ingressClassName: alb
-    # this will fail until tailscale is actually installed
-    # hostname: ${domain}
-    annotations:
-      # alb annotations: https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.8/guide/ingress/annotations/
-      alb.ingress.kubernetes.io/load-balancer-name: ${workspace}-argocd
-      alb.ingress.kubernetes.io/group.name: ${workspace}-argocd
-      alb.ingress.kubernetes.io/scheme: internal
-      alb.ingress.kubernetes.io/target-type: ip
-      alb.ingress.kubernetes.io/certificate-arn: ${cert_arn}
-      alb.ingress.kubernetes.io/subnets: ${subnets}
-      alb.ingress.kubernetes.io/security-groups: ${security_groups}
-      alb.ingress.kubernetes.io/backend-protocol: HTTP
-      alb.ingress.kubernetes.io/ssl-redirect: "443"
-      alb.ingress.kubernetes.io/listen-ports: >-
-        [{"HTTP": 80}, {"HTTPS": 443}]
+    enabled: false # See ingress.tf
+
+    # This module uses a duplocloud_k8_ingress Terraform resource to manage the ingress. You can let the Helm chart
+    # manage the ingress instead, but then you'll need to create a DNS alias for the LB and wire in the right security
+    # groups and subnets yourself. Here's an example of how you could do that:
+    # enabled: true
+    # controller: aws
+    # ingressClassName: alb
+    # annotations:
+    #   # alb annotations: https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.8/guide/ingress/annotations/
+    #   alb.ingress.kubernetes.io/load-balancer-name: <workspace>-argocd
+    #   alb.ingress.kubernetes.io/group.name: <workspace>-argocd
+    #   alb.ingress.kubernetes.io/scheme: internal
+    #   alb.ingress.kubernetes.io/target-type: ip
+    #   alb.ingress.kubernetes.io/certificate-arn: <cert_arn>
+    #   alb.ingress.kubernetes.io/subnets: <subnets>
+    #   alb.ingress.kubernetes.io/security-groups: <security_groups>
+    #   alb.ingress.kubernetes.io/backend-protocol: HTTP
+    #   alb.ingress.kubernetes.io/ssl-redirect: "443"
+    #   alb.ingress.kubernetes.io/listen-ports: >-
+    #     [{"HTTP": 80}, {"HTTPS": 443}]
+
     aws:
       serviceType: ClusterIP # <- Used with target-type: ip
       backendProtocolVersion: GRPC
@@ -90,7 +94,6 @@ configs:
       githubAppInstallationID: '${github_app.installation_id}'
       githubAppPrivateKey: |
         ${indent(8, github_app.private_key)}
-  %{ endif }
   repositories:
     bitnami:
       url: registry-1.docker.io/bitnamicharts
@@ -100,4 +103,4 @@ configs:
     ${repo}:
       url: ${github_app.url}/${repo}.git
     %{ endfor }
-
+  %{ endif }
